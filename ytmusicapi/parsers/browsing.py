@@ -208,9 +208,12 @@ def parse_playlist(data):
 
 
 def parse_related_artist(data):
-    return {
+    related = {
         'title': nav(data, TITLE_TEXT),
         'browseId': nav(data, TITLE + NAVIGATION_BROWSE_ID),
-        'subscribers': nav(data, SUBTITLE).split(' ')[0],
         'thumbnails': nav(data, THUMBNAIL_RENDERER),
     }
+    subtitle = nav(data, SUBTITLE, True)
+    if subtitle is not None:
+        related['subscribers'] = subtitle.split(' ')[0]
+    return related
